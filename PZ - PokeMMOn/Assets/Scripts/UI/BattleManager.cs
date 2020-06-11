@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class BattleManager : MonoBehaviour
 {
     public BattleMenu currentMenu;
+    private BattleMenu previousMenu;
+    public GameManager gameManager;
+    private int infoCounter;
 
     [Space(10)]
     [Header("Selection")]
@@ -48,6 +51,7 @@ public class BattleManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        infoCounter = 0;
         fightT = fightText.text;
         bagT = bagText.text;
         runT = runText.text;
@@ -92,24 +96,29 @@ public class BattleManager : MonoBehaviour
                         bagText.text = bagT;
                         pokemonText.text = pokemonT;
                         runText.text = runT;
+                        selectionInfoText.text = "Choose a move to attack.";
+                        ChangeMenuIfButtonPressed(BattleMenu.Fight);
                         break;
                     case 2:
                         fightText.text = fightT;
                         bagText.text = "> " + bagT;
                         pokemonText.text = pokemonT;
                         runText.text = runT;
+                        selectionInfoText.text = "Choose an item to use.";
                         break;
                     case 3:
                         fightText.text = fightT;
                         bagText.text = bagT;
                         pokemonText.text = "> " + pokemonT;
                         runText.text = runT;
+                        selectionInfoText.text = "Choose another Pokemon.";
                         break;
                     case 4:
                         fightText.text = fightT;
                         bagText.text = bagT;
                         pokemonText.text = pokemonT;
                         runText.text = "> " + runT;
+                        selectionInfoText.text = "Attempt to run away.";
                         break;
                 }
                 break;
@@ -121,24 +130,43 @@ public class BattleManager : MonoBehaviour
                         moveT.text = moveTT;
                         moveTH.text = moveTHT;
                         moveF.text = moveFT;
+                        IfEscPressedReturnToSelection();
                         break;
                     case 2:
                         moveO.text = moveOT;
                         moveT.text = "> " + moveTT;
                         moveTH.text = moveTHT;
                         moveF.text = moveFT;
+                        IfEscPressedReturnToSelection();
                         break;
                     case 3:
                         moveO.text = moveOT;
                         moveT.text = moveTT;
                         moveTH.text = "> " + moveTHT;
                         moveF.text = moveFT;
+                        IfEscPressedReturnToSelection();
                         break;
                     case 4:
                         moveO.text = moveOT;
                         moveT.text = moveTT;
                         moveTH.text = moveTHT;
                         moveF.text = "> " + moveFT;
+                        IfEscPressedReturnToSelection();
+                        break;
+                }
+                break;
+            case BattleMenu.Info:
+                switch (previousMenu)
+                {
+                    case BattleMenu.Selection:
+                        if(infoCounter == 1)
+                        {
+                            infoText.text = "Attempt to run away has failed!";
+                            if(Input.GetKeyDown(KeyCode.Space))
+                            {
+                                ChangeMenu(BattleMenu.Selection);
+                            }
+                        }
                         break;
                 }
                 break;
@@ -147,6 +175,11 @@ public class BattleManager : MonoBehaviour
 
     public void ChangeMenu(BattleMenu changeMenu)
     {
+        if(changeMenu != BattleMenu.Info)
+        {
+            previousMenu = currentMenu;
+        }
+        
         currentMenu = changeMenu;
         currentSelection = 0;
 
@@ -173,6 +206,41 @@ public class BattleManager : MonoBehaviour
                 movesDetails.gameObject.SetActive(false);
                 infoMenu.gameObject.SetActive(true);
                 break;
+        }
+    }
+
+    private void ChangeMenuIfButtonPressed(BattleMenu changeMenu)
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ChangeMenu(changeMenu);
+        }
+    }
+
+    private void IfEscPressedReturnToSelection()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ChangeMenu(BattleMenu.Selection);
+        }
+    }
+
+    // returns true if successful
+    private bool AttemptRunAway()
+    {
+        int chance = Random.Range(1, 100);
+        if(chance > 50)
+        {
+            gameManager.battleCamera.SetActive(false);
+            gameManager.playerCamera.SetActive(true);
+            infoCounter = 0;
+            ChangeMenu(BattleMenu.Selection);
+            return true;
+        }
+        else
+        {
+            infoCounter = 1;
+            return false;
         }
     }
 }
