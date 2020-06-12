@@ -119,6 +119,7 @@ public class BattleManager : MonoBehaviour
                         pokemonText.text = pokemonT;
                         runText.text = "> " + runT;
                         selectionInfoText.text = "Attempt to run away.";
+                        ChangeMenuIfButtonPressed(BattleMenu.Info);
                         break;
                 }
                 break;
@@ -159,14 +160,25 @@ public class BattleManager : MonoBehaviour
                 switch (previousMenu)
                 {
                     case BattleMenu.Selection:
-                        if(infoCounter == 1)
+                        Debug.Log("A");
+                        if (infoCounter == 1)
                         {
                             infoText.text = "Attempt to run away has failed!";
                             if(Input.GetKeyDown(KeyCode.Space))
                             {
                                 ChangeMenu(BattleMenu.Selection);
+                                infoCounter = 0;
+                                Debug.Log("Space pressed!");
                             }
                         }
+                        else
+                        {
+                            AttemptRunAway();
+                            Debug.Log("B");
+                        }
+                        break;
+                    default:
+                        Debug.Log("Default");
                         break;
                 }
                 break;
@@ -175,7 +187,7 @@ public class BattleManager : MonoBehaviour
 
     public void ChangeMenu(BattleMenu changeMenu)
     {
-        if(changeMenu != BattleMenu.Info)
+        if(changeMenu != BattleMenu.Info && currentMenu != BattleMenu.Info)
         {
             previousMenu = currentMenu;
         }
@@ -226,21 +238,19 @@ public class BattleManager : MonoBehaviour
     }
 
     // returns true if successful
-    private bool AttemptRunAway()
+    private void AttemptRunAway()
     {
         int chance = Random.Range(1, 100);
-        if(chance > 50)
+        Debug.Log(chance);
+        if (chance > 50)
         {
-            gameManager.battleCamera.SetActive(false);
-            gameManager.playerCamera.SetActive(true);
+            gameManager.ExitBattle();
             infoCounter = 0;
             ChangeMenu(BattleMenu.Selection);
-            return true;
         }
         else
         {
             infoCounter = 1;
-            return false;
         }
     }
 }

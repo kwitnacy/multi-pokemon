@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
 
     public BattleManager battleManager;
 
+    private GameObject defPokemon;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,7 +45,7 @@ public class GameManager : MonoBehaviour
 
         player.GetComponent<PlayerMovement>().isAllowedToMove = false;
 
-        GameObject defPokemon = Instantiate(emptyPokemon, defencePodium.transform.position, Quaternion.identity);
+        defPokemon = Instantiate(emptyPokemon, defencePodium.transform.position, Quaternion.identity);
 
         Vector3 pokeLocalPos = new Vector3(0, 1, 0);
 
@@ -56,6 +58,14 @@ public class GameManager : MonoBehaviour
         defPokemon.GetComponent<SpriteRenderer>().sprite = battlePokemon.image;
 
         battleManager.ChangeMenu(BattleMenu.Selection);
+    }
+
+    public void ExitBattle()
+    {
+        battleCamera.SetActive(false);
+        playerCamera.SetActive(true);
+        player.GetComponent<PlayerMovement>().isAllowedToMove = true;
+        defPokemon.GetComponent<SpriteRenderer>().sprite = null;
     }
 
     public List<BasePokemon> GetPokemonByRarity(Rarity rarity)
