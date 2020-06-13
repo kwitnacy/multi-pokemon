@@ -7173,7 +7173,142 @@ MonoBehaviour:
   - {fileID: 3840822391425641208, guid: 7be4cf9ca154b82419007da0d1b18b86, type: 3}
   - {fileID: 7535877545278231818, guid: 757586ff008544746a176ebd09352f50, type: 3}
   - {fileID: 985994128320196816, guid: 6d27b6db669aa144c9549d4b53522f56, type: 3}
-  allMoves: []
+  allMoves:
+  - Name: Tackle
+    category: 0
+    moveStat:
+      minimum: 0
+      maximum: 0
+    moveType: 0
+    pp: 35
+    power: 40
+    accuracy: 1
+  - Name: Vine Whip
+    category: 0
+    moveStat:
+      minimum: 0
+      maximum: 0
+    moveType: 7
+    pp: 25
+    power: 45
+    accuracy: 1
+  - Name: Razor Leaf
+    category: 0
+    moveStat:
+      minimum: 0
+      maximum: 0
+    moveType: 7
+    pp: 25
+    power: 55
+    accuracy: 0.95
+  - Name: Water Gun
+    category: 1
+    moveStat:
+      minimum: 0
+      maximum: 0
+    moveType: 6
+    pp: 25
+    power: 40
+    accuracy: 1
+  - Name: Rapid Spin
+    category: 0
+    moveStat:
+      minimum: 0
+      maximum: 0
+    moveType: 0
+    pp: 40
+    power: 50
+    accuracy: 1
+  - Name: Bite
+    category: 0
+    moveStat:
+      minimum: 0
+      maximum: 0
+    moveType: 11
+    pp: 25
+    power: 60
+    accuracy: 1
+  - Name: Water Pulse
+    category: 1
+    moveStat:
+      minimum: 0
+      maximum: 0
+    moveType: 6
+    pp: 20
+    power: 60
+    accuracy: 1
+  - Name: Scratch
+    category: 0
+    moveStat:
+      minimum: 0
+      maximum: 0
+    moveType: 0
+    pp: 35
+    power: 40
+    accuracy: 1
+  - Name: Ember
+    category: 1
+    moveStat:
+      minimum: 0
+      maximum: 0
+    moveType: 5
+    pp: 25
+    power: 40
+    accuracy: 1
+  - Name: Dragon Breath
+    category: 1
+    moveStat:
+      minimum: 0
+      maximum: 0
+    moveType: 12
+    pp: 20
+    power: 60
+    accuracy: 1
+  - Name: Fire Fang
+    category: 0
+    moveStat:
+      minimum: 0
+      maximum: 0
+    moveType: 5
+    pp: 15
+    power: 65
+    accuracy: 0.95
+  - Name: Nuzzle
+    category: 0
+    moveStat:
+      minimum: 0
+      maximum: 0
+    moveType: 9
+    pp: 20
+    power: 20
+    accuracy: 1
+  - Name: Quick Attack
+    category: 0
+    moveStat:
+      minimum: 0
+      maximum: 0
+    moveType: 0
+    pp: 30
+    power: 40
+    accuracy: 1
+  - Name: Thunder Shock
+    category: 1
+    moveStat:
+      minimum: 0
+      maximum: 0
+    moveType: 9
+    pp: 30
+    power: 40
+    accuracy: 1
+  - Name: Spark
+    category: 0
+    moveStat:
+      minimum: 0
+      maximum: 0
+    moveType: 9
+    pp: 20
+    power: 65
+    accuracy: 1
   defencePodium: {fileID: 1962731717}
   attackPodium: {fileID: 1703397557}
   emptyPokemon: {fileID: 1035730363096338016, guid: 06cbedb21d251c5418663ad163b6ad9e,
@@ -11815,6 +11950,7 @@ GameObject:
   - component: {fileID: 1645520403}
   - component: {fileID: 1645520404}
   - component: {fileID: 1645520405}
+  - component: {fileID: 1645520406}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -11956,6 +12092,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1645520406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1645520400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecfda479ffe71cd488ae19849cab00b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownedPokemon:
+  - {fileID: 7535877545278231818, guid: 757586ff008544746a176ebd09352f50, type: 3}
+  defaultPokemon: {fileID: 7535877545278231818, guid: 757586ff008544746a176ebd09352f50,
+    type: 3}
 --- !u!1001 &1647783704
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14355,6 +14507,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentMenu: 0
   gameManager: {fileID: 974505837}
+  player: {fileID: 1645520406}
   selectionMenu: {fileID: 293040345}
   selectionInfo: {fileID: 182140321}
   selectionInfoText: {fileID: 444259596}

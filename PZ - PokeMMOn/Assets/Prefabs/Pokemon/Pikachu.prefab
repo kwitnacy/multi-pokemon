@@ -95,7 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08133dc54fe47744da6985e5b1abd806, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: Pikachu
+  pName: 
   image: {fileID: -1525440635105275163, guid: 857eae8b603b61740a72e34cc76e675b, type: 3}
   biomeFound: 0
   type: 9
@@ -118,3 +118,40 @@ MonoBehaviour:
     SpAttackStat: 50
     SpDefenceStat: 40
     EvasionStat: 0
+  moves:
+  - Name: Nuzzle
+    category: 0
+    moveStat:
+      minimum: 0
+      maximum: 0
+    moveType: 9
+    pp: 20
+    power: 20
+    accuracy: 1
+  - Name: Quick Attack
+    category: 0
+    moveStat:
+      minimum: 0
+      maximum: 0
+    moveType: 0
+    pp: 30
+    power: 40
+    accuracy: 1
+  - Name: Thunder Shock
+    category: 1
+    moveStat:
+      minimum: 0
+      maximum: 0
+    moveType: 9
+    pp: 30
+    power: 40
+    accuracy: 1
+  - Name: Spark
+    category: 0
+    moveStat:
+      minimum: 0
+      maximum: 0
+    moveType: 9
+    pp: 20
+    power: 65
+    accuracy: 1

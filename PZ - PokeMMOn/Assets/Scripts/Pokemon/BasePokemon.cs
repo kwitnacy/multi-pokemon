@@ -26,6 +26,8 @@ public class BasePokemon : MonoBehaviour
     public PokemonEvolution evolveTo;
     public PokemonStats pokemonStats;
 
+    public List<PokemonMoves> moves = new List<PokemonMoves>();
+
     // Start is called before the first frame update
     void Start()
     {

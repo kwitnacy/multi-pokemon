@@ -9,6 +9,8 @@ public class BattleManager : MonoBehaviour
     private BattleMenu previousMenu;
     public GameManager gameManager;
     private int infoCounter;
+    public Player player;
+    private BasePokemon chosenPokemon;
 
     [Space(10)]
     [Header("Selection")]
@@ -29,7 +31,9 @@ public class BattleManager : MonoBehaviour
     public GameObject movesMenu;
     public GameObject movesDetails;
     public Text PP;
+    private string PPT;
     public Text pokemonType;
+    private string pokemonTypeT;
     public Text moveO;
     private string moveOT;
     public Text moveT;
@@ -51,6 +55,12 @@ public class BattleManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        chosenPokemon = player.defaultPokemon;
+        moveO.text = chosenPokemon.moves[0].Name;
+        moveT.text = chosenPokemon.moves[1].Name;
+        moveTH.text = chosenPokemon.moves[2].Name;
+        moveF.text = chosenPokemon.moves[3].Name;
+
         infoCounter = 0;
         fightT = fightText.text;
         bagT = bagText.text;
@@ -61,6 +71,9 @@ public class BattleManager : MonoBehaviour
         moveTT = moveT.text;
         moveTHT = moveTH.text;
         moveFT = moveF.text;
+
+        PPT = PP.text;
+        pokemonTypeT = pokemonType.text;
     }
 
     // Update is called once per frame
@@ -187,11 +200,11 @@ public class BattleManager : MonoBehaviour
 
     public void ChangeMenu(BattleMenu changeMenu)
     {
-        if(changeMenu != BattleMenu.Info && currentMenu != BattleMenu.Info)
+        if(currentMenu != BattleMenu.Info)
         {
             previousMenu = currentMenu;
         }
-        
+        Debug.Log(currentMenu.ToString());
         currentMenu = changeMenu;
         currentSelection = 0;
 
@@ -235,6 +248,11 @@ public class BattleManager : MonoBehaviour
         {
             ChangeMenu(BattleMenu.Selection);
         }
+    }
+
+    private void DisplayMoveStats(int selection)
+    {
+
     }
 
     // returns true if successful

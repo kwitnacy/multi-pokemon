@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public List<BasePokemon> ownedPokemon = new List<BasePokemon>();
+    public BasePokemon defaultPokemon;
 
     // Start is called before the first frame update
     void Start()
@@ -25,5 +26,5 @@ public class OwnedPokemon
     public string nickName;
     public BasePokemon pokemon;
     public int level;
-    public List<PokemonMoves> moves = new List<PokemonMoves>();
+    // public List<PokemonMoves> moves = new List<PokemonMoves>();
 }

@@ -95,7 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08133dc54fe47744da6985e5b1abd806, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: Squirtle
+  pName: 
   image: {fileID: 2719490116025776990, guid: 857eae8b603b61740a72e34cc76e675b, type: 3}
   biomeFound: 0
   type: 6
@@ -118,3 +118,40 @@ MonoBehaviour:
     SpAttackStat: 50
     SpDefenceStat: 64
     EvasionStat: 0
+  moves:
+  - Name: 
+    category: 0
+    moveStat:
+      minimum: 0
+      maximum: 0
+    moveType: 0
+    pp: 0
+    power: 0
+    accuracy: 0
+  - Name: 
+    category: 0
+    moveStat:
+      minimum: 0
+      maximum: 0
+    moveType: 0
+    pp: 0
+    power: 0
+    accuracy: 0
+  - Name: 
+    category: 0
+    moveStat:
+      minimum: 0
+      maximum: 0
+    moveType: 0
+    pp: 0
+    power: 0
+    accuracy: 0
+  - Name: 
+    category: 0
+    moveStat:
+      minimum: 0
+      maximum: 0
+    moveType: 0
+    pp: 0
+    power: 0
+    accuracy: 0
