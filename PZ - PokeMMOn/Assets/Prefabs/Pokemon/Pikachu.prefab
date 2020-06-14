@@ -107,6 +107,7 @@ MonoBehaviour:
   statDefence:
     minimum: 0
     maximum: 0
+  level: 0
   canEvolve: 0
   evolveTo:
     nextEvolution: {fileID: 0}
@@ -126,6 +127,7 @@ MonoBehaviour:
       maximum: 0
     moveType: 9
     pp: 20
+    currentPP: 20
     power: 20
     accuracy: 1
   - Name: Quick Attack
@@ -135,6 +137,7 @@ MonoBehaviour:
       maximum: 0
     moveType: 0
     pp: 30
+    currentPP: 30
     power: 40
     accuracy: 1
   - Name: Thunder Shock
@@ -144,6 +147,7 @@ MonoBehaviour:
       maximum: 0
     moveType: 9
     pp: 30
+    currentPP: 30
     power: 40
     accuracy: 1
   - Name: Spark
@@ -153,5 +157,6 @@ MonoBehaviour:
       maximum: 0
     moveType: 9
     pp: 20
+    currentPP: 20
     power: 65
     accuracy: 1

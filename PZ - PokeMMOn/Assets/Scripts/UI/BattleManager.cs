@@ -10,7 +10,7 @@ public class BattleManager : MonoBehaviour
     public GameManager gameManager;
     private int infoCounter;
     public Player player;
-    private BasePokemon chosenPokemon;
+    public BasePokemon chosenPokemon;
 
     [Space(10)]
     [Header("Selection")]
@@ -31,9 +31,7 @@ public class BattleManager : MonoBehaviour
     public GameObject movesMenu;
     public GameObject movesDetails;
     public Text PP;
-    private string PPT;
     public Text pokemonType;
-    private string pokemonTypeT;
     public Text moveO;
     private string moveOT;
     public Text moveT;
@@ -52,14 +50,30 @@ public class BattleManager : MonoBehaviour
     [Header("Misc")]
     public int currentSelection;
 
+    [Space(10)]
+    [Header("Misc")]
+    public Text enemyPokemonLevel;
+    public Text allyPokemonLevel;
+
     // Start is called before the first frame update
     void Start()
     {
         chosenPokemon = player.defaultPokemon;
+
+        gameManager.DisplayPlayerPokemon(chosenPokemon);
+
+        enemyPokemonLevel.text = "Lv" + gameManager.battlePokemon.level.ToString();
+        allyPokemonLevel.text = "Lv" + chosenPokemon.level.ToString();
+
         moveO.text = chosenPokemon.moves[0].Name;
         moveT.text = chosenPokemon.moves[1].Name;
         moveTH.text = chosenPokemon.moves[2].Name;
         moveF.text = chosenPokemon.moves[3].Name;
+
+        chosenPokemon.moves[0].currentPP = chosenPokemon.moves[0].pp;
+        chosenPokemon.moves[1].currentPP = chosenPokemon.moves[1].pp;
+        chosenPokemon.moves[2].currentPP = chosenPokemon.moves[2].pp;
+        chosenPokemon.moves[3].currentPP = chosenPokemon.moves[3].pp;
 
         infoCounter = 0;
         fightT = fightText.text;
@@ -71,9 +85,6 @@ public class BattleManager : MonoBehaviour
         moveTT = moveT.text;
         moveTHT = moveTH.text;
         moveFT = moveF.text;
-
-        PPT = PP.text;
-        pokemonTypeT = pokemonType.text;
     }
 
     // Update is called once per frame
@@ -144,6 +155,7 @@ public class BattleManager : MonoBehaviour
                         moveT.text = moveTT;
                         moveTH.text = moveTHT;
                         moveF.text = moveFT;
+                        DisplayMoveStatsOrChooseIt(0);
                         IfEscPressedReturnToSelection();
                         break;
                     case 2:
@@ -151,6 +163,7 @@ public class BattleManager : MonoBehaviour
                         moveT.text = "> " + moveTT;
                         moveTH.text = moveTHT;
                         moveF.text = moveFT;
+                        DisplayMoveStatsOrChooseIt(1);
                         IfEscPressedReturnToSelection();
                         break;
                     case 3:
@@ -158,6 +171,7 @@ public class BattleManager : MonoBehaviour
                         moveT.text = moveTT;
                         moveTH.text = "> " + moveTHT;
                         moveF.text = moveFT;
+                        DisplayMoveStatsOrChooseIt(2);
                         IfEscPressedReturnToSelection();
                         break;
                     case 4:
@@ -165,6 +179,7 @@ public class BattleManager : MonoBehaviour
                         moveT.text = moveTT;
                         moveTH.text = moveTHT;
                         moveF.text = "> " + moveFT;
+                        DisplayMoveStatsOrChooseIt(3);
                         IfEscPressedReturnToSelection();
                         break;
                 }
@@ -173,7 +188,7 @@ public class BattleManager : MonoBehaviour
                 switch (previousMenu)
                 {
                     case BattleMenu.Selection:
-                        Debug.Log("A");
+                        //Debug.Log("A");
                         if (infoCounter == 1)
                         {
                             infoText.text = "Attempt to run away has failed!";
@@ -181,17 +196,17 @@ public class BattleManager : MonoBehaviour
                             {
                                 ChangeMenu(BattleMenu.Selection);
                                 infoCounter = 0;
-                                Debug.Log("Space pressed!");
+                                //Debug.Log("Space pressed!");
                             }
                         }
                         else
                         {
                             AttemptRunAway();
-                            Debug.Log("B");
+                            //Debug.Log("B");
                         }
                         break;
                     default:
-                        Debug.Log("Default");
+                        //Debug.Log("Default");
                         break;
                 }
                 break;
@@ -204,7 +219,7 @@ public class BattleManager : MonoBehaviour
         {
             previousMenu = currentMenu;
         }
-        Debug.Log(currentMenu.ToString());
+        //Debug.Log(currentMenu.ToString());
         currentMenu = changeMenu;
         currentSelection = 0;
 
@@ -250,9 +265,17 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    private void DisplayMoveStats(int selection)
+    private void DisplayMoveStatsOrChooseIt(int selection)
     {
-
+        pokemonType.text = "Typpe/" + chosenPokemon.moves[selection].moveType.ToString();
+        PP.text = chosenPokemon.moves[selection].currentPP.ToString() +
+            "/" + chosenPokemon.moves[selection].pp.ToString();
+        
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            chosenPokemon.moves[selection].currentPP -= 1;
+            ChangeMenu(BattleMenu.Selection);
+        }
     }
 
     // returns true if successful

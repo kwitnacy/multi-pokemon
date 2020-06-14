@@ -7181,6 +7181,7 @@ MonoBehaviour:
       maximum: 0
     moveType: 0
     pp: 35
+    currentPP: 0
     power: 40
     accuracy: 1
   - Name: Vine Whip
@@ -7190,6 +7191,7 @@ MonoBehaviour:
       maximum: 0
     moveType: 7
     pp: 25
+    currentPP: 0
     power: 45
     accuracy: 1
   - Name: Razor Leaf
@@ -7199,6 +7201,7 @@ MonoBehaviour:
       maximum: 0
     moveType: 7
     pp: 25
+    currentPP: 0
     power: 55
     accuracy: 0.95
   - Name: Water Gun
@@ -7208,6 +7211,7 @@ MonoBehaviour:
       maximum: 0
     moveType: 6
     pp: 25
+    currentPP: 0
     power: 40
     accuracy: 1
   - Name: Rapid Spin
@@ -7217,6 +7221,7 @@ MonoBehaviour:
       maximum: 0
     moveType: 0
     pp: 40
+    currentPP: 0
     power: 50
     accuracy: 1
   - Name: Bite
@@ -7226,6 +7231,7 @@ MonoBehaviour:
       maximum: 0
     moveType: 11
     pp: 25
+    currentPP: 0
     power: 60
     accuracy: 1
   - Name: Water Pulse
@@ -7235,6 +7241,7 @@ MonoBehaviour:
       maximum: 0
     moveType: 6
     pp: 20
+    currentPP: 0
     power: 60
     accuracy: 1
   - Name: Scratch
@@ -7244,6 +7251,7 @@ MonoBehaviour:
       maximum: 0
     moveType: 0
     pp: 35
+    currentPP: 0
     power: 40
     accuracy: 1
   - Name: Ember
@@ -7253,6 +7261,7 @@ MonoBehaviour:
       maximum: 0
     moveType: 5
     pp: 25
+    currentPP: 0
     power: 40
     accuracy: 1
   - Name: Dragon Breath
@@ -7262,6 +7271,7 @@ MonoBehaviour:
       maximum: 0
     moveType: 12
     pp: 20
+    currentPP: 0
     power: 60
     accuracy: 1
   - Name: Fire Fang
@@ -7271,6 +7281,7 @@ MonoBehaviour:
       maximum: 0
     moveType: 5
     pp: 15
+    currentPP: 0
     power: 65
     accuracy: 0.95
   - Name: Nuzzle
@@ -7280,6 +7291,7 @@ MonoBehaviour:
       maximum: 0
     moveType: 9
     pp: 20
+    currentPP: 0
     power: 20
     accuracy: 1
   - Name: Quick Attack
@@ -7289,6 +7301,7 @@ MonoBehaviour:
       maximum: 0
     moveType: 0
     pp: 30
+    currentPP: 0
     power: 40
     accuracy: 1
   - Name: Thunder Shock
@@ -7298,6 +7311,7 @@ MonoBehaviour:
       maximum: 0
     moveType: 9
     pp: 30
+    currentPP: 0
     power: 40
     accuracy: 1
   - Name: Spark
@@ -7307,12 +7321,14 @@ MonoBehaviour:
       maximum: 0
     moveType: 9
     pp: 20
+    currentPP: 0
     power: 65
     accuracy: 1
   defencePodium: {fileID: 1962731717}
   attackPodium: {fileID: 1703397557}
   emptyPokemon: {fileID: 1035730363096338016, guid: 06cbedb21d251c5418663ad163b6ad9e,
     type: 3}
+  battlePokemon: {fileID: 0}
   battleManager: {fileID: 1948650733}
 --- !u!4 &974505838
 Transform:
@@ -14508,6 +14524,7 @@ MonoBehaviour:
   currentMenu: 0
   gameManager: {fileID: 974505837}
   player: {fileID: 1645520406}
+  chosenPokemon: {fileID: 0}
   selectionMenu: {fileID: 293040345}
   selectionInfo: {fileID: 182140321}
   selectionInfoText: {fileID: 444259596}
@@ -14526,6 +14543,8 @@ MonoBehaviour:
   infoMenu: {fileID: 1518241248}
   infoText: {fileID: 586194430}
   currentSelection: 0
+  enemyPokemonLevel: {fileID: 807957748}
+  allyPokemonLevel: {fileID: 269257599}
 --- !u!1 &1962731716
 GameObject:
   m_ObjectHideFlags: 0

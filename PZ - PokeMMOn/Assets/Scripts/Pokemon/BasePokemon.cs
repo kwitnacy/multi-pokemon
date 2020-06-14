@@ -19,7 +19,7 @@ public class BasePokemon : MonoBehaviour
 
     public Stat statDefence;
 
-    private int level;
+    public int level;
 
     public bool canEvolve;
 

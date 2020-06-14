@@ -16,10 +16,12 @@ public class GameManager : MonoBehaviour
     public Transform defencePodium;
     public Transform attackPodium;
     public GameObject emptyPokemon;
+    public BasePokemon battlePokemon;
 
     public BattleManager battleManager;
 
     private GameObject defPokemon;
+    private GameObject atkPokemon;
 
     // Start is called before the first frame update
     void Start()
@@ -39,7 +41,7 @@ public class GameManager : MonoBehaviour
         playerCamera.SetActive(false);
         battleCamera.SetActive(true);
 
-        BasePokemon battlePokemon = GetRandomPokemonFromList(GetPokemonByRarity(rarity));
+        battlePokemon = GetRandomPokemonFromList(GetPokemonByRarity(rarity));
 
         Debug.Log(battlePokemon.pName);
 
@@ -58,6 +60,21 @@ public class GameManager : MonoBehaviour
         defPokemon.GetComponent<SpriteRenderer>().sprite = battlePokemon.image;
 
         battleManager.ChangeMenu(BattleMenu.Selection);
+    }
+
+    public void DisplayPlayerPokemon(BasePokemon playerPokemon)
+    {
+        atkPokemon = Instantiate(emptyPokemon, attackPodium.transform.position, Quaternion.identity);
+
+        Vector3 pokeLocalPos = new Vector3(0, 1, 0);
+
+        atkPokemon.transform.parent = attackPodium;
+        atkPokemon.transform.localPosition = pokeLocalPos;
+
+        BasePokemon tempPokemon = atkPokemon.AddComponent<BasePokemon>() as BasePokemon;
+        tempPokemon.AddMember(playerPokemon);
+
+        atkPokemon.GetComponent<SpriteRenderer>().sprite = playerPokemon.image;
     }
 
     public void ExitBattle()
@@ -100,6 +117,7 @@ public class PokemonMoves
     public Stat moveStat;
     public PokemonType moveType;
     public int pp;
+    public int currentPP;
     public float power;
     public float accuracy;
 }
