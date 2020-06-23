@@ -101,6 +101,7 @@ MonoBehaviour:
   type: 9
   rarity: 4
   HP: 35
+  maxHP: 35
   statAttack:
     minimum: 0
     maximum: 0

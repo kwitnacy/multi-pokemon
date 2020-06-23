@@ -54,6 +54,7 @@ public class BattleManager : MonoBehaviour
     [Header("Misc")]
     public Text enemyPokemonLevel;
     public Text allyPokemonLevel;
+    public Text playerHealth;
 
     // Start is called before the first frame update
     void Start()
@@ -64,6 +65,8 @@ public class BattleManager : MonoBehaviour
 
         enemyPokemonLevel.text = "Lv" + gameManager.battlePokemon.level.ToString();
         allyPokemonLevel.text = "Lv" + chosenPokemon.level.ToString();
+
+        playerHealth.text = chosenPokemon.HP.ToString() + "/" + chosenPokemon.GetMaxHP().ToString();
 
         moveO.text = chosenPokemon.moves[0].Name;
         moveT.text = chosenPokemon.moves[1].Name;

@@ -101,12 +101,14 @@ MonoBehaviour:
   type: 7
   rarity: 0
   HP: 45
+  maxHP: 45
   statAttack:
     minimum: 0
     maximum: 0
   statDefence:
     minimum: 0
     maximum: 0
+  level: 0
   canEvolve: 1
   evolveTo:
     nextEvolution: {fileID: 295674865259036398, guid: 4fa6fa8d5872174479b725e29ae4c4c2,
@@ -127,6 +129,7 @@ MonoBehaviour:
       maximum: 0
     moveType: 0
     pp: 0
+    currentPP: 0
     power: 0
     accuracy: 0
   - Name: 
@@ -136,6 +139,7 @@ MonoBehaviour:
       maximum: 0
     moveType: 0
     pp: 0
+    currentPP: 0
     power: 0
     accuracy: 0
   - Name: 
@@ -145,6 +149,7 @@ MonoBehaviour:
       maximum: 0
     moveType: 0
     pp: 0
+    currentPP: 0
     power: 0
     accuracy: 0
   - Name: 
@@ -154,5 +159,6 @@ MonoBehaviour:
       maximum: 0
     moveType: 0
     pp: 0
+    currentPP: 0
     power: 0
     accuracy: 0

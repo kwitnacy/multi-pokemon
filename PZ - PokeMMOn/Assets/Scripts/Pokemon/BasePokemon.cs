@@ -13,7 +13,7 @@ public class BasePokemon : MonoBehaviour
     public Rarity rarity;
 
     public int HP;
-    private int maxHP;
+    public int maxHP;
 
     public Stat statAttack;
 
@@ -31,7 +31,7 @@ public class BasePokemon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        maxHP = HP;
+
     }
 
     // Update is called once per frame
@@ -39,6 +39,8 @@ public class BasePokemon : MonoBehaviour
     {
         
     }
+
+    public int GetMaxHP() { return maxHP; }
 
     public void AddMember(BasePokemon bp)
     {
