@@ -80,11 +80,11 @@ def session(data, addr, free_port):
 	shared_key = private_key.exchange(ec.ECDH(), client_public_key)
 
 	derived_key = HKDF(
-	    algorithm=hashes.SHA256(),
-	    length=32,
-	    salt=None,
-	    info=b'handshake data',
-	    backend=default_backend()
+		algorithm=hashes.SHA256(),
+		length=32,
+		salt=None,
+		info=b'handshake data',
+		backend=default_backend()
 	).derive(shared_key)
 	
 	aesgcm = AESGCM(derived_key)

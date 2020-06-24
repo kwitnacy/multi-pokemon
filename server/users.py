@@ -3,11 +3,10 @@
 users = {
 	"kwitnoncy": {
 		"user_name": "kwitnoncy",
-		"passwd_hash": '123QWERTY',
+		"passwd_hash": 'dzien_dobry',
 		"email_hash": 'kwitn@put.poznan.pl',
 		"ip_addr": None,
 		"loc": None,
-		"friends": [],
 	},
 	"rojber": {
 		"user_name": "rojber",
@@ -15,7 +14,6 @@ users = {
 		"email_hash": 'kwitn@put.poznan.pl',
 		"ip_addr": None,
 		"loc": None,
-		"friends": [],
 	}
 }
 

@@ -17,7 +17,7 @@ frame = {
 	'add contact': 0x04,
 	'edit contact': 0x08,
 	'delete contact': 0x0C,
-    'END_TRANS': 0x20
+	'END_TRANS': 0x20
 }
 
 SERVER_ADDR_MAIN = '192.168.0.20'
@@ -41,40 +41,40 @@ s.bind((HOST, PORT))
 
 
 def broadcast_fun():
-    global MAIN_AES_ENGINE
-    while True:
-        data = s_broadcast.recv(4096) 
-        print(MAIN_AES_ENGINE.decrypt(data[:12], data[12:], None))
-    
-    print('hej1')
+	global MAIN_AES_ENGINE
+	while True:
+		data = s_broadcast.recv(4096) 
+		print(MAIN_AES_ENGINE.decrypt(data[:12], data[12:], None))
+	
+	print('hej1')
 
 
 def send_loc():
-    val_x, val_y = 1000, 1000
-    
-    while True:
-        data_ = USER_NAME + '|(' + str(val_x) + ',' + str(val_y) + ')'
-        s_loc.sendto(bytes(data_, 'utf-8'), (HOST, 2001))	
-        val_x -= 1
-        val_y -= 1
-        time.sleep(0.05)
+	val_x, val_y = 1000, 1000
+	
+	while True:
+		data_ = USER_NAME + '|(' + str(val_x) + ',' + str(val_y) + ')'
+		s_loc.sendto(bytes(data_, 'utf-8'), (HOST, 2001))	
+		val_x -= 1
+		val_y -= 1
+		time.sleep(0.05)
 
 
 def crypto_stuff(sock):
-    global SERVER_ADDR_MAIN, SERVER_PORT_MAIN
-    private_key = ec.generate_private_key(ec.SECP384R1, default_backend())
-    public_key = private_key.public_key()
-    public_key_bytes = public_key.public_bytes(encoding=serialization.Encoding.PEM, format=serialization.PublicFormat.SubjectPublicKeyInfo)
+	global SERVER_ADDR_MAIN, SERVER_PORT_MAIN
+	private_key = ec.generate_private_key(ec.SECP384R1, default_backend())
+	public_key = private_key.public_key()
+	public_key_bytes = public_key.public_bytes(encoding=serialization.Encoding.PEM, format=serialization.PublicFormat.SubjectPublicKeyInfo)
 
-    s.sendto(public_key_bytes, (SERVER_ADDR_MAIN, SERVER_PORT_MAIN))
-        
-    data, SERVER_ADDR = s.recvfrom(4096)
-    print(data)
-    server_public_key = serialization.load_pem_public_key(data, backend=default_backend())
-    shared_key = private_key.exchange(ec.ECDH(), server_public_key)
-    derived_key = HKDF(algorithm=hashes.SHA256(), length=32, salt=None, info=b'handshake data', backend=default_backend()).derive(shared_key)
+	s.sendto(public_key_bytes, (SERVER_ADDR_MAIN, SERVER_PORT_MAIN))
+		
+	data, SERVER_ADDR = s.recvfrom(4096)
+	print(data)
+	server_public_key = serialization.load_pem_public_key(data, backend=default_backend())
+	shared_key = private_key.exchange(ec.ECDH(), server_public_key)
+	derived_key = HKDF(algorithm=hashes.SHA256(), length=32, salt=None, info=b'handshake data', backend=default_backend()).derive(shared_key)
 
-    return AESGCM(derived_key), SERVER_ADDR
+	return AESGCM(derived_key), SERVER_ADDR
 
 # sign up, begin
 sign_up_data = {

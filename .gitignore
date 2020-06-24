@@ -130,3 +130,7 @@ dmypy.json
 
 # wireshark stuff
 *.pcapng
+
+# c# project
+multi_pokemon_cplotek/*
+*.cs
