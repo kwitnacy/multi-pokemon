@@ -28,6 +28,11 @@ public class BasePokemon : MonoBehaviour
 
     public List<PokemonMoves> moves = new List<PokemonMoves>();
 
+    public List<PokemonType> damagedNormallyBy = new List<PokemonType>();
+    public List<PokemonType> weakTo = new List<PokemonType>();
+    public List<PokemonType> immuneTo = new List<PokemonType>();
+    public List<PokemonType> resistantTo = new List<PokemonType>();
+
     // Start is called before the first frame update
     void Start()
     {

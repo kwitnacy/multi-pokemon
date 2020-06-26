@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,12 @@ public class BattleManager : MonoBehaviour
     private int infoCounter;
     public Player player;
     public BasePokemon chosenPokemon;
+    private bool myTurn;
+    private bool wasEnemyTurn;
+    private int chosenMove;
+
+    // -1: had no effect, 0: wasn't very effective, 1: normal effect, 2: was super effective
+    private int moveWasEffective;
 
     [Space(10)]
     [Header("Selection")]
@@ -88,131 +95,206 @@ public class BattleManager : MonoBehaviour
         moveTT = moveT.text;
         moveTHT = moveTH.text;
         moveFT = moveF.text;
+
+        // The faster Pokemon starts the turn first
+        if(chosenPokemon.pokemonStats.SpeedStat > gameManager.battlePokemon.pokemonStats.SpeedStat)
+        {
+            myTurn = true;
+        }
+        else
+        {
+            myTurn = true;
+            // TODO: uncomment when enemy turn works
+            //myTurn = false;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.UpArrow))
+        if (myTurn)
         {
-            if(currentSelection > 0)
+            if(wasEnemyTurn)
             {
-                currentSelection--;
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            if(currentSelection < 4)
-            {
-                currentSelection++;
-            }
-        }
-        if(currentSelection == 0)
-        {
-            currentSelection = 1;
-        }
+                ChangeMenu(BattleMenu.Selection);
 
-        // Making it possible to say what menu option player is choosing
-        switch(currentMenu)
-        {
-            case BattleMenu.Selection:
-                switch (currentSelection)
+                wasEnemyTurn = false;
+            }
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                if (currentSelection > 0)
                 {
-                    case 1:
-                        fightText.text = "> " + fightT;
-                        bagText.text = bagT;
-                        pokemonText.text = pokemonT;
-                        runText.text = runT;
-                        selectionInfoText.text = "Choose a move to attack.";
-                        ChangeMenuIfButtonPressed(BattleMenu.Fight);
-                        break;
-                    case 2:
-                        fightText.text = fightT;
-                        bagText.text = "> " + bagT;
-                        pokemonText.text = pokemonT;
-                        runText.text = runT;
-                        selectionInfoText.text = "Choose an item to use.";
-                        break;
-                    case 3:
-                        fightText.text = fightT;
-                        bagText.text = bagT;
-                        pokemonText.text = "> " + pokemonT;
-                        runText.text = runT;
-                        selectionInfoText.text = "Choose another Pokemon.";
-                        break;
-                    case 4:
-                        fightText.text = fightT;
-                        bagText.text = bagT;
-                        pokemonText.text = pokemonT;
-                        runText.text = "> " + runT;
-                        selectionInfoText.text = "Attempt to run away.";
-                        ChangeMenuIfButtonPressed(BattleMenu.Info);
-                        break;
+                    currentSelection--;
                 }
-                break;
-            case BattleMenu.Fight:
-                switch (currentSelection)
+            }
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                if (currentSelection < 4)
                 {
-                    case 1:
-                        moveO.text = "> " + moveOT;
-                        moveT.text = moveTT;
-                        moveTH.text = moveTHT;
-                        moveF.text = moveFT;
-                        DisplayMoveStatsOrChooseIt(0);
-                        IfEscPressedReturnToSelection();
-                        break;
-                    case 2:
-                        moveO.text = moveOT;
-                        moveT.text = "> " + moveTT;
-                        moveTH.text = moveTHT;
-                        moveF.text = moveFT;
-                        DisplayMoveStatsOrChooseIt(1);
-                        IfEscPressedReturnToSelection();
-                        break;
-                    case 3:
-                        moveO.text = moveOT;
-                        moveT.text = moveTT;
-                        moveTH.text = "> " + moveTHT;
-                        moveF.text = moveFT;
-                        DisplayMoveStatsOrChooseIt(2);
-                        IfEscPressedReturnToSelection();
-                        break;
-                    case 4:
-                        moveO.text = moveOT;
-                        moveT.text = moveTT;
-                        moveTH.text = moveTHT;
-                        moveF.text = "> " + moveFT;
-                        DisplayMoveStatsOrChooseIt(3);
-                        IfEscPressedReturnToSelection();
-                        break;
+                    currentSelection++;
                 }
-                break;
-            case BattleMenu.Info:
-                switch (previousMenu)
-                {
-                    case BattleMenu.Selection:
-                        //Debug.Log("A");
-                        if (infoCounter == 1)
-                        {
-                            infoText.text = "Attempt to run away has failed!";
-                            if(Input.GetKeyDown(KeyCode.Space))
+            }
+            if (currentSelection == 0)
+            {
+                currentSelection = 1;
+            }
+
+            // Making it possible to say what menu option player is choosing
+            switch (currentMenu)
+            {
+                case BattleMenu.Selection:
+                    switch (currentSelection)
+                    {
+                        case 1:
+                            fightText.text = "> " + fightT;
+                            bagText.text = bagT;
+                            pokemonText.text = pokemonT;
+                            runText.text = runT;
+                            selectionInfoText.text = "Choose a move to attack.";
+                            ChangeMenuIfButtonPressed(BattleMenu.Fight);
+                            break;
+                        case 2:
+                            fightText.text = fightT;
+                            bagText.text = "> " + bagT;
+                            pokemonText.text = pokemonT;
+                            runText.text = runT;
+                            selectionInfoText.text = "Choose an item to use.";
+                            break;
+                        case 3:
+                            fightText.text = fightT;
+                            bagText.text = bagT;
+                            pokemonText.text = "> " + pokemonT;
+                            runText.text = runT;
+                            selectionInfoText.text = "Choose another Pokemon.";
+                            break;
+                        case 4:
+                            fightText.text = fightT;
+                            bagText.text = bagT;
+                            pokemonText.text = pokemonT;
+                            runText.text = "> " + runT;
+                            selectionInfoText.text = "Attempt to run away.";
+                            ChangeMenuIfButtonPressed(BattleMenu.Info);
+                            break;
+                    }
+                    break;
+                case BattleMenu.Fight:
+                    switch (currentSelection)
+                    {
+                        case 1:
+                            moveO.text = "> " + moveOT;
+                            moveT.text = moveTT;
+                            moveTH.text = moveTHT;
+                            moveF.text = moveFT;
+                            DisplayMoveStatsOrChooseIt(0);
+                            IfEscPressedReturnToSelection();
+                            break;
+                        case 2:
+                            moveO.text = moveOT;
+                            moveT.text = "> " + moveTT;
+                            moveTH.text = moveTHT;
+                            moveF.text = moveFT;
+                            DisplayMoveStatsOrChooseIt(1);
+                            IfEscPressedReturnToSelection();
+                            break;
+                        case 3:
+                            moveO.text = moveOT;
+                            moveT.text = moveTT;
+                            moveTH.text = "> " + moveTHT;
+                            moveF.text = moveFT;
+                            DisplayMoveStatsOrChooseIt(2);
+                            IfEscPressedReturnToSelection();
+                            break;
+                        case 4:
+                            moveO.text = moveOT;
+                            moveT.text = moveTT;
+                            moveTH.text = moveTHT;
+                            moveF.text = "> " + moveFT;
+                            DisplayMoveStatsOrChooseIt(3);
+                            IfEscPressedReturnToSelection();
+                            break;
+                    }
+                    break;
+                case BattleMenu.Info:
+                    switch (previousMenu)
+                    {
+                        case BattleMenu.Selection:
+                            //Debug.Log("A");
+                            if (infoCounter == 1)
                             {
-                                ChangeMenu(BattleMenu.Selection);
-                                infoCounter = 0;
-                                //Debug.Log("Space pressed!");
+                                infoText.text = "Attempt to run away has failed!";
+                                if (Input.GetKeyDown(KeyCode.Space))
+                                {
+                                    ChangeMenu(BattleMenu.Selection);
+                                    infoCounter = 0;
+                                    //Debug.Log("Space pressed!");
+                                }
                             }
-                        }
-                        else
-                        {
-                            AttemptRunAway();
-                            //Debug.Log("B");
-                        }
-                        break;
-                    default:
-                        //Debug.Log("Default");
-                        break;
-                }
-                break;
+                            else
+                            {
+                                AttemptRunAway();
+                                //Debug.Log("B");
+                            }
+                            break;
+                        case BattleMenu.Fight:
+                            
+                            if(infoCounter == 0)
+                            {
+                                infoText.text = chosenPokemon.pName + " chose " + chosenPokemon.moves[chosenMove].Name + ".";
+                                if (Input.GetKeyDown(KeyCode.Space))
+                                {
+                                    infoCounter = 1;
+                                }
+                            }
+                            else
+                            {
+                                if (moveWasEffective == -1)
+                                {
+                                    infoText.text = "It had no effect.";
+                                    if (Input.GetKeyDown(KeyCode.Space))
+                                    {
+                                        myTurn = false;
+                                    }
+                                }
+                                if (moveWasEffective == 0)
+                                {
+                                    infoText.text = "It wasn't very effective.";
+                                    if (Input.GetKeyDown(KeyCode.Space))
+                                    {
+                                        myTurn = false;
+                                    }
+                                }
+                                if (moveWasEffective == 1)
+                                {
+                                    myTurn = false;
+                                }
+                                if (moveWasEffective == 2)
+                                {
+                                    infoText.text = "It was super effective!";
+                                    if (Input.GetKeyDown(KeyCode.Space))
+                                    {
+                                        myTurn = false;
+                                    }
+                                }
+                            }
+                            break;
+                        default:
+                            //Debug.Log("Default");
+                            break;
+                    }
+                    break;
+            }
+        }
+        else
+        {
+            wasEnemyTurn = true;
+            if(currentMenu == BattleMenu.Info && infoCounter == 0)
+            {
+                infoText.text = "Waiting for the enemy " + gameManager.battlePokemon.pName + " to make a move.";
+            }
+            else
+            {
+                ChangeMenu(BattleMenu.Info);
+            }
         }
     }
 
@@ -252,6 +334,50 @@ public class BattleManager : MonoBehaviour
         }
     }
 
+    public void ApplyDamageToEnemyPokemon(int moveIndex)
+    {
+        int ad;
+        if(chosenPokemon.moves[moveIndex].category == MoveType.Physical)
+        {
+            ad = chosenPokemon.pokemonStats.AttackStat / gameManager.battlePokemon.pokemonStats.DefenceStat;
+        }
+        else
+        {
+            ad = chosenPokemon.pokemonStats.SpAttackStat / gameManager.battlePokemon.pokemonStats.SpDefenceStat;
+        }
+
+        // TODO: fix because the result doesn't match
+        int damage = (int)math.round((((2 * chosenPokemon.level / 5 + 2) * chosenPokemon.moves[moveIndex].power * ad) / 50 + 2));
+
+        PokemonType type = chosenPokemon.moves[moveIndex].moveType;
+        if (gameManager.battlePokemon.damagedNormallyBy.Contains(type)) { }
+        else
+        {
+            if (gameManager.battlePokemon.weakTo.Contains(type))
+            {
+                damage *= 2;
+            }
+            else
+            {
+                if (gameManager.battlePokemon.resistantTo.Contains(type))
+                {
+                    damage = (int)math.round(damage * 0.5);
+                }
+                else
+                {
+                    damage = 0;
+                }
+            }
+        }
+        Debug.Log("Damage dealt: " + damage.ToString());
+        gameManager.battlePokemon.HP -= damage;
+
+        if(gameManager.battlePokemon.HP <= 0)
+        {
+            gameManager.ExitBattle();
+        }
+    }
+
     private void ChangeMenuIfButtonPressed(BattleMenu changeMenu)
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -277,14 +403,24 @@ public class BattleManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             chosenPokemon.moves[selection].currentPP -= 1;
-            ChangeMenu(BattleMenu.Selection);
+            chosenMove = selection;
+            infoCounter = 0;
+
+            // TODO: Switch the menu to Info
+            ChangeMenu(BattleMenu.Info);
+
+            // TODO: Calculate and apply damage to the enemy or changes to status
+            if (chosenPokemon.moves[chosenMove].category != MoveType.Status)
+            {
+                ApplyDamageToEnemyPokemon(selection);
+            }
         }
     }
 
     // returns true if successful
     private void AttemptRunAway()
     {
-        int chance = Random.Range(1, 100);
+        int chance = UnityEngine.Random.Range(1, 100);
         Debug.Log(chance);
         if (chance > 50)
         {

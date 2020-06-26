@@ -108,7 +108,7 @@ MonoBehaviour:
   statDefence:
     minimum: 0
     maximum: 0
-  level: 0
+  level: 1
   canEvolve: 0
   evolveTo:
     nextEvolution: {fileID: 0}
@@ -161,3 +161,7 @@ MonoBehaviour:
     currentPP: 20
     power: 65
     accuracy: 1
+  damagedNormallyBy: 000000001100000003000000100000000f0000000d0000000a0000000c0000000b0000000e00000005000000060000000700000008000000
+  weakTo: 02000000
+  immuneTo: 
+  resistantTo: 010000000400000009000000

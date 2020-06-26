@@ -108,12 +108,12 @@ MonoBehaviour:
   statDefence:
     minimum: 0
     maximum: 0
-  level: 0
+  level: 1
   canEvolve: 1
   evolveTo:
     nextEvolution: {fileID: 295674865259036398, guid: 4fa6fa8d5872174479b725e29ae4c4c2,
       type: 3}
-    levelUp: 0
+    levelUp: 5
   pokemonStats:
     AttackStat: 49
     DefenceStat: 49
@@ -162,3 +162,7 @@ MonoBehaviour:
     currentPP: 0
     power: 0
     accuracy: 0
+  damagedNormallyBy: 000000001000000002000000030000000e0000000f000000040000000c0000000b000000
+  weakTo: 01000000050000000a00000008000000
+  immuneTo: 
+  resistantTo: 110000000600000007000000090000000d000000
