@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public GameObject player;
 
     public List<BasePokemon> allPokemon = new List<BasePokemon>();
+    public List<BasePokemon> allPlayerPokemon = new List<BasePokemon>();
 
     public List<PokemonMoves> allMoves = new List<PokemonMoves>();
 
@@ -38,10 +39,15 @@ public class GameManager : MonoBehaviour
 
     public void EnterBattle(Rarity rarity)
     {
+        battleManager.humanEnemy = false;
+
         playerCamera.SetActive(false);
         battleCamera.SetActive(true);
 
         battlePokemon = GetRandomPokemonFromList(GetPokemonByRarity(rarity));
+        battleManager.enemyHealthBar.localScale = new Vector3(1, 1, 1);
+
+        battlePokemon.HP = battlePokemon.maxHP;
 
         Debug.Log(battlePokemon.pName);
 

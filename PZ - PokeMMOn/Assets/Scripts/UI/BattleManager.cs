@@ -15,6 +15,10 @@ public class BattleManager : MonoBehaviour
     private bool myTurn;
     private bool wasEnemyTurn;
     private int chosenMove;
+    private string enemyMoveName;
+
+
+    public bool humanEnemy;
 
     // -1: had no effect, 0: wasn't very effective, 1: normal effect, 2: was super effective
     private int moveWasEffective;
@@ -62,11 +66,14 @@ public class BattleManager : MonoBehaviour
     public Text enemyPokemonLevel;
     public Text allyPokemonLevel;
     public Text playerHealth;
+    public Transform playerHealthBar;
+    public Transform enemyHealthBar;
 
     // Start is called before the first frame update
     void Start()
     {
         chosenPokemon = player.defaultPokemon;
+        chosenPokemon.HP = chosenPokemon.maxHP;
 
         gameManager.DisplayPlayerPokemon(chosenPokemon);
 
@@ -103,9 +110,7 @@ public class BattleManager : MonoBehaviour
         }
         else
         {
-            myTurn = true;
-            // TODO: uncomment when enemy turn works
-            //myTurn = false;
+            myTurn = false;
         }
     }
 
@@ -226,7 +231,7 @@ public class BattleManager : MonoBehaviour
                                 {
                                     ChangeMenu(BattleMenu.Selection);
                                     infoCounter = 0;
-                                    //Debug.Log("Space pressed!");
+                                    myTurn = false;
                                 }
                             }
                             else
@@ -247,34 +252,7 @@ public class BattleManager : MonoBehaviour
                             }
                             else
                             {
-                                if (moveWasEffective == -1)
-                                {
-                                    infoText.text = "It had no effect.";
-                                    if (Input.GetKeyDown(KeyCode.Space))
-                                    {
-                                        myTurn = false;
-                                    }
-                                }
-                                if (moveWasEffective == 0)
-                                {
-                                    infoText.text = "It wasn't very effective.";
-                                    if (Input.GetKeyDown(KeyCode.Space))
-                                    {
-                                        myTurn = false;
-                                    }
-                                }
-                                if (moveWasEffective == 1)
-                                {
-                                    myTurn = false;
-                                }
-                                if (moveWasEffective == 2)
-                                {
-                                    infoText.text = "It was super effective!";
-                                    if (Input.GetKeyDown(KeyCode.Space))
-                                    {
-                                        myTurn = false;
-                                    }
-                                }
+                                DisplayMoveEffectivness(false);
                             }
                             break;
                         default:
@@ -290,10 +268,49 @@ public class BattleManager : MonoBehaviour
             if(currentMenu == BattleMenu.Info && infoCounter == 0)
             {
                 infoText.text = "Waiting for the enemy " + gameManager.battlePokemon.pName + " to make a move.";
+                if (!humanEnemy)
+                {
+                    int moveIndex = UnityEngine.Random.Range(0, 4);
+
+                    if(gameManager.battlePokemon.moves[moveIndex].category != MoveType.Status)
+                    {
+                        CalculateAndApplyDamageFromEnemy(moveIndex);
+                        enemyMoveName = gameManager.battlePokemon.moves[moveIndex].Name;
+                        infoCounter = 1;
+                    }
+                    else
+                    {
+                        // TODO: Status change handling
+                        myTurn = true;
+                    }
+                    
+                }
+                else
+                {
+                    // TODO: Apply damage or status change from human enemy
+                }
             }
             else
             {
-                ChangeMenu(BattleMenu.Info);
+                if (currentMenu == BattleMenu.Info && infoCounter == 1)
+                {
+                    infoText.text = gameManager.battlePokemon.pName + " chose " + enemyMoveName + ".";
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        infoCounter = 2;
+                    }
+                }
+                else
+                {
+                    if (currentMenu == BattleMenu.Info && infoCounter == 2)
+                    {
+                        DisplayMoveEffectivness(true);
+                    }
+                    else
+                    {
+                        ChangeMenu(BattleMenu.Info);
+                    } 
+                }
             }
         }
     }
@@ -336,32 +353,99 @@ public class BattleManager : MonoBehaviour
 
     public void ApplyDamageToEnemyPokemon(int moveIndex)
     {
-        int ad;
+        float ad;
         if(chosenPokemon.moves[moveIndex].category == MoveType.Physical)
         {
-            ad = chosenPokemon.pokemonStats.AttackStat / gameManager.battlePokemon.pokemonStats.DefenceStat;
+            ad = (float)chosenPokemon.pokemonStats.AttackStat / (float)gameManager.battlePokemon.pokemonStats.DefenceStat;
         }
         else
         {
-            ad = chosenPokemon.pokemonStats.SpAttackStat / gameManager.battlePokemon.pokemonStats.SpDefenceStat;
+            ad = (float)chosenPokemon.pokemonStats.SpAttackStat / (float)gameManager.battlePokemon.pokemonStats.SpDefenceStat;
         }
 
-        // TODO: fix because the result doesn't match
-        int damage = (int)math.round((((2 * chosenPokemon.level / 5 + 2) * chosenPokemon.moves[moveIndex].power * ad) / 50 + 2));
+        int damage = (int)math.round((((((float)(2 * chosenPokemon.level) / 5.0) + 2.0) * chosenPokemon.moves[moveIndex].power * ad) / 50.0) + 2.0);
 
         PokemonType type = chosenPokemon.moves[moveIndex].moveType;
-        if (gameManager.battlePokemon.damagedNormallyBy.Contains(type)) { }
+
+        damage = DamageModifiersCalculation(damage, type, gameManager.battlePokemon);
+        
+        gameManager.battlePokemon.HP -= damage;
+
+        float healthPrecent = (float)gameManager.battlePokemon.HP / (float)gameManager.battlePokemon.maxHP;
+        if (healthPrecent > 0)
+        {
+            enemyHealthBar.localScale = new Vector3(healthPrecent, 1, 1);
+        }
         else
         {
-            if (gameManager.battlePokemon.weakTo.Contains(type))
+            enemyHealthBar.localScale = new Vector3(0, 1, 1);
+        }
+
+        if (gameManager.battlePokemon.HP <= 0)
+        {
+            gameManager.ExitBattle();
+        }
+    }
+
+    public void CalculateAndApplyDamageFromEnemy(int moveIndex)
+    {
+        BasePokemon enemy = gameManager.battlePokemon;
+        float ad;
+        if (enemy.moves[moveIndex].category == MoveType.Physical)
+        {
+            ad = (float)enemy.pokemonStats.AttackStat / (float)chosenPokemon.pokemonStats.DefenceStat;
+        }
+        else
+        {
+            ad = (float)enemy.pokemonStats.SpAttackStat / (float)chosenPokemon.pokemonStats.SpDefenceStat;
+        }
+
+        int damage = (int)math.round((((((float)(2 * enemy.level) / 5.0) + 2.0) * enemy.moves[moveIndex].power * ad) / 50.0) + 2.0);
+
+        PokemonType type = enemy.moves[moveIndex].moveType;
+
+        damage = DamageModifiersCalculation(damage, type, chosenPokemon);
+
+        chosenPokemon.HP -= damage;
+
+        float healthPrecent = (float)chosenPokemon.HP / (float)chosenPokemon.maxHP;
+        if(healthPrecent>0)
+        {
+            playerHealthBar.localScale = new Vector3(healthPrecent, 1, 1);
+        }
+        else
+        {
+            playerHealthBar.localScale = new Vector3(0, 1, 1);
+        }
+
+        if (chosenPokemon.HP <= 0)
+        {
+            gameManager.ExitBattle();
+        }
+    }
+
+    private int DamageModifiersCalculation(int damage, PokemonType damageType, BasePokemon hitPokemon)
+    {
+        if (hitPokemon.damagedNormallyBy.Contains(damageType))
+        {
+            Debug.Log("Normal Damage");
+            moveWasEffective = 1;
+        }
+        else
+        {
+            if (hitPokemon.weakTo.Contains(damageType))
             {
                 damage *= 2;
+                Debug.Log("Super effective");
+                moveWasEffective = 2;
             }
             else
             {
-                if (gameManager.battlePokemon.resistantTo.Contains(type))
+                if (hitPokemon.resistantTo.Contains(damageType))
                 {
                     damage = (int)math.round(damage * 0.5);
+                    Debug.Log("Not very effective");
+                    moveWasEffective = 0;
                 }
                 else
                 {
@@ -370,12 +454,8 @@ public class BattleManager : MonoBehaviour
             }
         }
         Debug.Log("Damage dealt: " + damage.ToString());
-        gameManager.battlePokemon.HP -= damage;
 
-        if(gameManager.battlePokemon.HP <= 0)
-        {
-            gameManager.ExitBattle();
-        }
+        return damage;
     }
 
     private void ChangeMenuIfButtonPressed(BattleMenu changeMenu)
@@ -406,7 +486,7 @@ public class BattleManager : MonoBehaviour
             chosenMove = selection;
             infoCounter = 0;
 
-            // TODO: Switch the menu to Info
+            // Switch the menu to Info
             ChangeMenu(BattleMenu.Info);
 
             // TODO: Calculate and apply damage to the enemy or changes to status
@@ -420,7 +500,7 @@ public class BattleManager : MonoBehaviour
     // returns true if successful
     private void AttemptRunAway()
     {
-        int chance = UnityEngine.Random.Range(1, 100);
+        int chance = UnityEngine.Random.Range(1, 101);
         Debug.Log(chance);
         if (chance > 50)
         {
@@ -431,6 +511,42 @@ public class BattleManager : MonoBehaviour
         else
         {
             infoCounter = 1;
+        }
+    }
+
+    private void DisplayMoveEffectivness(bool turn)
+    {
+        if (moveWasEffective == -1)
+        {
+            infoText.text = "It had no effect.";
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                myTurn = turn;
+                infoCounter = 0;
+            }
+        }
+        if (moveWasEffective == 0)
+        {
+            infoText.text = "It wasn't very effective.";
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                myTurn = turn;
+                infoCounter = 0;
+            }
+        }
+        if (moveWasEffective == 1)
+        {
+            myTurn = turn;
+            infoCounter = 0;
+        }
+        if (moveWasEffective == 2)
+        {
+            infoText.text = "It was super effective!";
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                myTurn = turn;
+                infoCounter = 0;
+            }
         }
     }
 }
