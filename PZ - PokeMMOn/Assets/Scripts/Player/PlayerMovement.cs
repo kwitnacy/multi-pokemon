@@ -23,20 +23,64 @@ public class PlayerMovement : MonoBehaviour {
     public Sprite southSprite;
     public Sprite westSprite;
 
-    public float walkSpeed = 3f;
+    public float walkSpeed;
+    private Rigidbody2D myRigidbody;
+    private Vector3 change;
 
     public bool isAllowedToMove = true;
 
     void Start()
     {
         isAllowedToMove = true;
+        myRigidbody = GetComponent<Rigidbody2D>();
     }
 
-	void Update () { 
-
+	void Update () {
+        change = Vector3.zero;
         if(!isMoving && isAllowedToMove)
         {
-            input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+            change.x = Input.GetAxisRaw("Horizontal");
+            change.y = Input.GetAxisRaw("Vertical");
+            if (change != Vector3.zero)
+            {
+                MoveCharacter();
+
+                if (change.x < 0)
+                {
+                    currentDirection = Direction.West;
+                }
+                if (change.x > 0)
+                {
+                    currentDirection = Direction.East;
+                }
+                if (change.y < 0)
+                {
+                    currentDirection = Direction.South;
+                }
+                if (change.y > 0)
+                {
+                    currentDirection = Direction.North;
+                }
+
+                switch (currentDirection)
+                {
+                    case Direction.North:
+                        gameObject.GetComponent<SpriteRenderer>().sprite = northSprite;
+                        break;
+                    case Direction.East:
+                        gameObject.GetComponent<SpriteRenderer>().sprite = eastSprite;
+                        break;
+                    case Direction.South:
+                        gameObject.GetComponent<SpriteRenderer>().sprite = southSprite;
+                        break;
+                    case Direction.West:
+                        gameObject.GetComponent<SpriteRenderer>().sprite = westSprite;
+                        break;
+                }
+            }
+
+
+                /*input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
             if (Mathf.Abs(input.x) > Mathf.Abs(input.y))
                 input.y = 0;
             else
@@ -79,11 +123,16 @@ public class PlayerMovement : MonoBehaviour {
                 }
 
                 StartCoroutine(Move(transform));
-            }
+            }*/
 
         }
 
 	}
+
+    void MoveCharacter()
+    {
+        myRigidbody.MovePosition(transform.position + change * walkSpeed * Time.deltaTime);
+    }
 
     public IEnumerator Move(Transform entity)
     {
