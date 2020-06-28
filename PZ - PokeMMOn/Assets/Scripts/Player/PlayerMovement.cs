@@ -12,7 +12,7 @@ enum Direction
 public class PlayerMovement : MonoBehaviour {
 
     Direction currentDirection;
-    //Vector2 input;
+    Vector2 input;
     bool isMoving = false;
     Vector3 startPos;
     Vector3 endPos;
@@ -29,6 +29,10 @@ public class PlayerMovement : MonoBehaviour {
 
     public bool isAllowedToMove = true;
 
+    public Animator animator;
+
+    
+
     void Start()
     {
         isAllowedToMove = true;
@@ -36,6 +40,7 @@ public class PlayerMovement : MonoBehaviour {
     }
 
 	void Update () {
+
         change = Vector3.zero;
         if(!isMoving && isAllowedToMove)
         {
@@ -43,38 +48,55 @@ public class PlayerMovement : MonoBehaviour {
             change.y = Input.GetAxisRaw("Vertical");
             if (change != Vector3.zero)
             {
-                MoveCharacter();
-
                 if (change.x < 0)
                 {
+                    //animator.SetInteger("Face", 2);
                     currentDirection = Direction.West;
+                    animator.SetInteger("Face", 6);
                 }
                 if (change.x > 0)
                 {
+                    // animator.SetInteger("Face", 4);
+
                     currentDirection = Direction.East;
+                    animator.SetInteger("Face", 8);
                 }
                 if (change.y < 0)
                 {
+                    //animator.SetInteger("Face", 3);
                     currentDirection = Direction.South;
+                    animator.SetInteger("Face", 7);
                 }
                 if (change.y > 0)
                 {
+                    //animator.SetInteger("Face", 1);
                     currentDirection = Direction.North;
+                    animator.SetInteger("Face", 5);
                 }
+               
+                MoveCharacter();
+
+                
 
                 switch (currentDirection)
                 {
                     case Direction.North:
-                        gameObject.GetComponent<SpriteRenderer>().sprite = northSprite;
+                        animator.SetInteger("Face", 1);
+                       
+                       // gameObject.GetComponent<SpriteRenderer>().sprite = northSprite;
+                        
                         break;
                     case Direction.East:
-                        gameObject.GetComponent<SpriteRenderer>().sprite = eastSprite;
+                        animator.SetInteger("Face", 4);
+                       // gameObject.GetComponent<SpriteRenderer>().sprite = eastSprite;
                         break;
                     case Direction.South:
-                        gameObject.GetComponent<SpriteRenderer>().sprite = southSprite;
+                        animator.SetInteger("Face", 3);
+                        //gameObject.GetComponent<SpriteRenderer>().sprite = southSprite;
                         break;
                     case Direction.West:
-                        gameObject.GetComponent<SpriteRenderer>().sprite = westSprite;
+                        animator.SetInteger("Face", 2);
+                       // gameObject.GetComponent<SpriteRenderer>().sprite = westSprite;
                         break;
                 }
             }
@@ -134,7 +156,7 @@ public class PlayerMovement : MonoBehaviour {
         myRigidbody.MovePosition(transform.position + change * walkSpeed * Time.deltaTime);
     }
 
-    /*public IEnumerator Move(Transform entity)
+    public IEnumerator Move(Transform entity)
     {
         isMoving = true;
         startPos = entity.position;
@@ -151,5 +173,5 @@ public class PlayerMovement : MonoBehaviour {
 
         isMoving = false;
         yield return 0;
-    }*/
+    }
 }

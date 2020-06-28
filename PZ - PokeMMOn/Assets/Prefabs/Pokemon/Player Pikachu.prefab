@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7898522649920238458}
   - component: {fileID: 7535877545278231818}
   m_Layer: 0
-  m_Name: Player Pikachu
+  m_Name: Pikachu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -100,7 +100,7 @@ MonoBehaviour:
   biomeFound: 0
   type: 9
   rarity: 4
-  HP: 5
+  HP: 35
   maxHP: 35
   statAttack:
     minimum: 0
@@ -108,8 +108,7 @@ MonoBehaviour:
   statDefence:
     minimum: 0
     maximum: 0
-  canBeUsedByPlayer: 1
-  level: 8
+  level: 1
   canEvolve: 0
   evolveTo:
     nextEvolution: {fileID: 0}
@@ -129,7 +128,7 @@ MonoBehaviour:
       maximum: 0
     moveType: 9
     pp: 20
-    currentPP: 20
+    currentPP: 16
     power: 20
     accuracy: 1
   - Name: Quick Attack
@@ -159,7 +158,7 @@ MonoBehaviour:
       maximum: 0
     moveType: 9
     pp: 20
-    currentPP: 14
+    currentPP: 19
     power: 65
     accuracy: 1
   damagedNormallyBy: 000000001100000003000000100000000f0000000d0000000a0000000c0000000b0000000e00000005000000060000000700000008000000

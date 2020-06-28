@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     public BattleManager battleManager;
 
     private GameObject defPokemon;
-    public GameObject atkPokemon;
+    private GameObject atkPokemon;
 
     // Start is called before the first frame update
     void Start()
