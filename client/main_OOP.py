@@ -73,9 +73,7 @@ class Client:
 		print(self.aes_engine.decrypt(data[:12], data[12:], None))
 
 
-
-		
-c = Client('192.168.0.20', 1337, ';', '123', '13')
+c = Client('192.168.0.20', 1337, 'asd', 'asdasd', 'asdasdasd')
 #c.crypto_stuff()
 
 sign_up_data = {

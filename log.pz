@@ -1,28 +1,36 @@
-[Jun 07 14:28:07] Login from: 127.0.0.1:1500, username: kwitnoncy: success :)
-[Jun 07 14:29:04] Login from: 127.0.0.1:1500, username: kwitnoncy: success :)
-[Jun 07 14:30:10] Login from: 127.0.0.1:1500, username: kwitnoncy: success :)
-[Jun 07 14:31:08] Login from: 127.0.0.1:1500, username: kwitnoncy: success :)
-[Jun 07 14:31:42] Login from: 127.0.0.1:1500, username: kwitnoncy: success :)
-[Jun 07 14:32:01] Login from: 127.0.0.1:1500, username: kwitnoncy: success :)
-[Jun 07 14:33:28] Login from: 127.0.0.1:1500, username: kwitnoncy: success :)
-[Jun 07 14:41:12] Login from: 127.0.0.1:1500, username: kwitnoncy: success :)
-[Jun 07 14:42:53] Login from: 127.0.0.1:1500, username: kwitnoncy: success :)
-[Jun 07 14:42:53] kwitnoncy(0,0,0)
-[Jun 07 14:42:54] kwitnoncy(1,1,1)
-[Jun 07 14:42:54] kwitnoncy(2,2,2)[Jun 08 14:27:53] Login from: 127.0.0.1:1500, username: kwitnoncy: success :)
-[Jun 08 14:52:52] Login from: 127.0.0.1:1500, username: kwitnoncy: success :)
-[Jun 08 15:00:15] Login from: 127.0.0.1:1500, username: kwitnoncy: success :)
-[Jun 08 15:00:51] Login from: 127.0.0.1:1500, username: kwitnoncy: success :)
-[Jun 08 15:03:34] Login from: 127.0.0.1:1500, username: kwitnoncy: success :)
-[Jun 08 15:03:53] Login from: 127.0.0.1:1500, username: kwitnoncy: success :)
-[Jun 08 15:05:16] Login from: 127.0.0.1:1500, username: kwitnoncy: success :)
-[Jun 08 15:07:52] Login from: 127.0.0.1:1500, username: kwitnoncy: success :)
-[Jun 08 15:08:41] Login from: 127.0.0.1:1500, username: kwitnoncy: success :)
-[Jun 08 15:09:13] Login from: 127.0.0.1:1500, username: kwitnoncy: success :)
-[Jun 08 15:09:53] Login from: 127.0.0.1:1500, username: kwitnoncy: success :)
-[Jun 08 15:10:08] Login from: 127.0.0.1:1500, username: kwitnoncy: success :)
-[Jun 08 15:12:17] Login from: 127.0.0.1:1500, username: kwitnoncy: success :)
-[Jun 08 15:13:07] Login from: 127.0.0.1:1500, username: kwitnoncy: success :)
-[Jun 08 15:22:16] Login from: 127.0.0.1:1500, username: kwitnoncy: success :)
-[Jun 08 15:27:26] Login from: 127.0.0.1:1500, username: kwitnoncy: success :)
-[Jun 08 15:28:46] Login from: 127.0.0.1:1500, username: kwitnoncy: success :)
+[Jun 28 20:52:15] Login from: 127.0.0.1:1500, username: kwitnoncy: success :)
+[Jun 28 20:54:03] Login from: 127.0.0.1:1500, username: kwitnoncy: success :)
+[Jun 28 20:55:10] STARTED Server
+[Jun 28 20:55:16] Login from: 127.0.0.1:1500, username: kwitnoncy: success :)
+[Jun 28 21:03:28] STARTED Server
+[Jun 28 21:03:54] Login from: 127.0.0.1:1500, username: kwitnoncy: success :)
+[Jun 28 21:04:53] STARTED Server
+[Jun 28 21:04:57] Sign-in from: 127.0.0.1:1500, username: kwitnoncy: name taken, account was not created
+[Jun 28 21:05:16] STARTED Server
+[Jun 28 21:06:48] Sign-in from: 127.0.0.1:1500, username: kwitnoncy: name taken, account was not created
+[Jun 28 21:07:13] Sign-in from: 127.0.0.1:1500, username: kwitnoncy: name taken, account was not created
+[Jun 28 21:07:43] Sign-in from: 127.0.0.1:1500, username: test_test_nowe_konto: accont was created (passwd_hash: dzien_dobry)
+[Jun 28 21:09:49] STARTED Server
+[Jun 28 21:10:04] Sign-in from: 127.0.0.1:1500, username: kwitnoncy: name taken, account was not created
+[Jun 28 21:10:17] Login from: 127.0.0.1:1500, username: kwitnoncy: success :)
+[Jun 28 21:21:46] STARTED Server
+[Jun 28 21:22:23] Login from: 127.0.0.1:1500, username: kwitnoncy: success :)
+[Jun 28 21:39:23] STARTED Server
+[Jun 28 21:39:32] Login from: 127.0.0.1:1500, username: kwitnoncy: success :)
+[Jun 28 21:39:55] Logout from: 127.0.0.1:1500, username: kwitnoncy: succes :)
+[Jun 28 21:44:12] STARTED Server
+[Jun 28 21:44:17] Sign-in from: 127.0.0.1:1500, username: test_Ttesteslkajdlkajslkj: accont was created (passwd_hash: dzien_dobry)
+[Jun 28 21:44:24] Login from: 127.0.0.1:1500, username: test_Ttesteslkajdlkajslkj: success :)
+[Jun 28 21:44:32] Logout from: 127.0.0.1:1500, username: test_Ttesteslkajdlkajslkj: succes :)
+[Jun 28 21:46:18] STARTED Server
+[Jun 28 21:46:23] Sign-in from: 127.0.0.1:1500, username: test_Ttesteslkajdlkajslkj: accont was created (passwd_hash: dzien_dobry)
+[Jun 28 21:46:38] Login from: 127.0.0.1:1500, username: test_Ttesteslkajdlkajslkj: success :)
+[Jun 28 21:46:55] Logout from: 127.0.0.1:1500, username: test_Ttesteslkajdlkajslkj: succes :)
+[Jun 28 21:48:50] STARTED Server
+[Jun 28 21:49:09] Sign-in from: 127.0.0.1:1500, username: testeslkajdlkajslkj: accont was created (passwd_hash: dzien_dobry)
+[Jun 28 21:49:13] Login from: 127.0.0.1:1500, username: testeslkajdlkajslkj: success :)
+[Jun 28 21:49:16] Logout from: 127.0.0.1:1500, username: testeslkajdlkajslkj: succes :)
+[Jun 28 21:54:00] STARTED Server
+[Jun 28 21:54:03] Sign-in from: 127.0.0.1:1500, username: testeslkajdlkajslkj: name taken, account was not created
+[Jun 28 21:54:11] Login from: 127.0.0.1:1500, username: testeslkajdlkajslkj: success :)
+[Jun 28 21:54:12] Logout from: 127.0.0.1:1500, username: testeslkajdlkajslkj: succes :)
