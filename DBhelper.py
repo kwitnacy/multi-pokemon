@@ -1,13 +1,15 @@
 import pymysql
-class DBHelper:
 
+class DBHelperclass:
     def __init__(self):
         self.host = "127.0.0.1"
-        self.user = "root"
-        self.password = ""
+        self.user = "test_multipokemon"
+        self.password = "password"
         self.db = "test"
 
     def __connect__(self):
+        print(self.host, self.user, self.password, self.db)
+
         self.con = pymysql.connect(host=self.host, user=self.user, password=self.password, db=self.db, cursorclass=pymysql.cursors.
                                    DictCursor)
         self.cur = self.con.cursor()

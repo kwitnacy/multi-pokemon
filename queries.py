@@ -2,7 +2,7 @@ import DBclases
 import DBhelper
 
 class Query:
-    db=DBhelper.DBHelper()
+    db=DBhelper.DBHelperclass()
     def __init__(self):
        self.db.change_db("pokemon")
        pass
