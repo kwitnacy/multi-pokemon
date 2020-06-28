@@ -12,7 +12,7 @@ enum Direction
 public class PlayerMovement : MonoBehaviour {
 
     Direction currentDirection;
-    Vector2 input;
+    //Vector2 input;
     bool isMoving = false;
     Vector3 startPos;
     Vector3 endPos;
@@ -134,7 +134,7 @@ public class PlayerMovement : MonoBehaviour {
         myRigidbody.MovePosition(transform.position + change * walkSpeed * Time.deltaTime);
     }
 
-    public IEnumerator Move(Transform entity)
+    /*public IEnumerator Move(Transform entity)
     {
         isMoving = true;
         startPos = entity.position;
@@ -151,5 +151,5 @@ public class PlayerMovement : MonoBehaviour {
 
         isMoving = false;
         yield return 0;
-    }
+    }*/
 }

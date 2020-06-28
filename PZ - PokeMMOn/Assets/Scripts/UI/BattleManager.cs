@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
@@ -35,7 +36,7 @@ public class BattleManager : MonoBehaviour
     public Text runText;
     private string runT;
     public Text pokemonText;
-    private string pokemonT;
+    private string pokemonTe;
 
     [Space(10)]
     [Header("Moves")]
@@ -51,6 +52,17 @@ public class BattleManager : MonoBehaviour
     private string moveTHT;
     public Text moveF;
     private string moveFT;
+
+    [Space(10)]
+    [Header("Pokemon")]
+    public GameObject pokemonMenu;
+    public GameObject pokemonDetails;
+    public Text pokemonLevel;
+    public Text pokemonTypeSelection;
+    public Text pokemonO;
+    public Text pokemonT;
+    public Text pokemonTH;
+    public Text pokemonF;
 
     [Space(10)]
     [Header("Info")]
@@ -96,7 +108,7 @@ public class BattleManager : MonoBehaviour
         fightT = fightText.text;
         bagT = bagText.text;
         runT = runText.text;
-        pokemonT = pokemonText.text;
+        pokemonTe = pokemonText.text;
 
         moveOT = moveO.text;
         moveTT = moveT.text;
@@ -104,7 +116,7 @@ public class BattleManager : MonoBehaviour
         moveFT = moveF.text;
 
         // The faster Pokemon starts the turn first
-        if(chosenPokemon.pokemonStats.SpeedStat > gameManager.battlePokemon.pokemonStats.SpeedStat)
+        if (chosenPokemon.pokemonStats.SpeedStat > gameManager.battlePokemon.pokemonStats.SpeedStat)
         {
             myTurn = true;
         }
@@ -153,7 +165,7 @@ public class BattleManager : MonoBehaviour
                         case 1:
                             fightText.text = "> " + fightT;
                             bagText.text = bagT;
-                            pokemonText.text = pokemonT;
+                            pokemonText.text = pokemonTe;
                             runText.text = runT;
                             selectionInfoText.text = "Choose a move to attack.";
                             ChangeMenuIfButtonPressed(BattleMenu.Fight);
@@ -161,21 +173,22 @@ public class BattleManager : MonoBehaviour
                         case 2:
                             fightText.text = fightT;
                             bagText.text = "> " + bagT;
-                            pokemonText.text = pokemonT;
+                            pokemonText.text = pokemonTe;
                             runText.text = runT;
                             selectionInfoText.text = "Choose an item to use.";
                             break;
                         case 3:
                             fightText.text = fightT;
                             bagText.text = bagT;
-                            pokemonText.text = "> " + pokemonT;
+                            pokemonText.text = "> " + pokemonTe;
                             runText.text = runT;
                             selectionInfoText.text = "Choose another Pokemon.";
+                            ChangeMenuIfButtonPressed(BattleMenu.Pokemon);
                             break;
                         case 4:
                             fightText.text = fightT;
                             bagText.text = bagT;
-                            pokemonText.text = pokemonT;
+                            pokemonText.text = pokemonTe;
                             runText.text = "> " + runT;
                             selectionInfoText.text = "Attempt to run away.";
                             ChangeMenuIfButtonPressed(BattleMenu.Info);
@@ -215,6 +228,43 @@ public class BattleManager : MonoBehaviour
                             moveTH.text = moveTHT;
                             moveF.text = "> " + moveFT;
                             DisplayMoveStatsOrChooseIt(3);
+                            IfEscPressedReturnToSelection();
+                            break;
+                    }
+                    break;
+                case BattleMenu.Pokemon:
+                    switch (currentSelection)
+                    {
+                        case 1:
+                            pokemonO.text = "> " + player.ownedPokemon[0].pName;
+                            pokemonT.text = player.ownedPokemon[1].pName;
+                            pokemonTH.text = player.ownedPokemon[2].pName;
+                            pokemonF.text = player.ownedPokemon[3].pName;
+                            DisplayPokemonStatsOrChooseIt(0);
+                            IfEscPressedReturnToSelection();
+                            break;
+                        case 2:
+                            pokemonO.text = player.ownedPokemon[0].pName;
+                            pokemonT.text = "> " + player.ownedPokemon[1].pName;
+                            pokemonTH.text = player.ownedPokemon[2].pName;
+                            pokemonF.text = player.ownedPokemon[3].pName;
+                            DisplayPokemonStatsOrChooseIt(1);
+                            IfEscPressedReturnToSelection();
+                            break;
+                        case 3:
+                            pokemonO.text = player.ownedPokemon[0].pName;
+                            pokemonT.text = player.ownedPokemon[1].pName;
+                            pokemonTH.text = "> " + player.ownedPokemon[2].pName;
+                            pokemonF.text = player.ownedPokemon[3].pName;
+                            DisplayPokemonStatsOrChooseIt(2);
+                            IfEscPressedReturnToSelection();
+                            break;
+                        case 4:
+                            pokemonO.text = player.ownedPokemon[0].pName;
+                            pokemonT.text = player.ownedPokemon[1].pName;
+                            pokemonTH.text = player.ownedPokemon[2].pName;
+                            pokemonF.text = "> " + player.ownedPokemon[3].pName;
+                            DisplayPokemonStatsOrChooseIt(3);
                             IfEscPressedReturnToSelection();
                             break;
                     }
@@ -333,6 +383,8 @@ public class BattleManager : MonoBehaviour
                 movesMenu.gameObject.SetActive(false);
                 movesDetails.gameObject.SetActive(false);
                 infoMenu.gameObject.SetActive(false);
+                pokemonDetails.gameObject.SetActive(false);
+                pokemonMenu.gameObject.SetActive(false);
                 break;
             case BattleMenu.Fight:
                 selectionInfo.gameObject.SetActive(false);
@@ -340,6 +392,8 @@ public class BattleManager : MonoBehaviour
                 movesMenu.gameObject.SetActive(true);
                 movesDetails.gameObject.SetActive(true);
                 infoMenu.gameObject.SetActive(false);
+                pokemonDetails.gameObject.SetActive(false);
+                pokemonMenu.gameObject.SetActive(false);
                 break;
             case BattleMenu.Info:
                 selectionInfo.gameObject.SetActive(false);
@@ -347,6 +401,17 @@ public class BattleManager : MonoBehaviour
                 movesMenu.gameObject.SetActive(false);
                 movesDetails.gameObject.SetActive(false);
                 infoMenu.gameObject.SetActive(true);
+                pokemonDetails.gameObject.SetActive(false);
+                pokemonMenu.gameObject.SetActive(false);
+                break;
+            case BattleMenu.Pokemon:
+                selectionInfo.gameObject.SetActive(false);
+                selectionMenu.gameObject.SetActive(false);
+                movesMenu.gameObject.SetActive(false);
+                movesDetails.gameObject.SetActive(false);
+                infoMenu.gameObject.SetActive(false);
+                pokemonDetails.gameObject.SetActive(true);
+                pokemonMenu.gameObject.SetActive(true);
                 break;
         }
     }
@@ -383,6 +448,7 @@ public class BattleManager : MonoBehaviour
 
         if (gameManager.battlePokemon.HP <= 0)
         {
+            player.CatchPokemon(gameManager.battlePokemon);
             gameManager.ExitBattle();
         }
     }
@@ -420,7 +486,15 @@ public class BattleManager : MonoBehaviour
 
         if (chosenPokemon.HP <= 0)
         {
-            gameManager.ExitBattle();
+            int poke = player.PickFirstAvailablePokemon();
+            if(poke == -1)
+            {
+                gameManager.ExitBattle();
+            }
+            else
+            {
+                ChangeThePokemon(poke);
+            }
         }
     }
 
@@ -497,12 +571,72 @@ public class BattleManager : MonoBehaviour
         }
     }
 
+    private void DisplayPokemonStatsOrChooseIt(int selection)
+    {
+        if(player.ownedPokemon[selection].canBeUsedByPlayer)
+        {
+            pokemonLevel.text = player.ownedPokemon[selection].level.ToString();
+            pokemonTypeSelection.text = "Typpe/" + player.ownedPokemon[selection].type.ToString();
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                ChangeThePokemon(selection);
+
+                myTurn = false;
+            }
+        }
+        else
+        {
+            pokemonLevel.text = "";
+            pokemonTypeSelection.text = "Unavailable";
+        }
+    }
+
+    private void ChangeThePokemon(int selection)
+    {
+        player.ChangeDefaultPokemon(selection);
+        chosenPokemon = player.defaultPokemon;
+
+        gameManager.atkPokemon.GetComponent<SpriteRenderer>().sprite = null;
+
+        gameManager.DisplayPlayerPokemon(chosenPokemon);
+
+        allyPokemonLevel.text = "Lv" + chosenPokemon.level.ToString();
+
+        playerHealth.text = chosenPokemon.HP.ToString() + "/" + chosenPokemon.GetMaxHP().ToString();
+
+        moveO.text = chosenPokemon.moves[0].Name;
+        moveT.text = chosenPokemon.moves[1].Name;
+        moveTH.text = chosenPokemon.moves[2].Name;
+        moveF.text = chosenPokemon.moves[3].Name;
+
+        chosenPokemon.moves[0].currentPP = chosenPokemon.moves[0].pp;
+        chosenPokemon.moves[1].currentPP = chosenPokemon.moves[1].pp;
+        chosenPokemon.moves[2].currentPP = chosenPokemon.moves[2].pp;
+        chosenPokemon.moves[3].currentPP = chosenPokemon.moves[3].pp;
+
+        moveOT = moveO.text;
+        moveTT = moveT.text;
+        moveTHT = moveTH.text;
+        moveFT = moveF.text;
+
+        float healthPrecent = (float)chosenPokemon.HP / (float)chosenPokemon.maxHP;
+        if (healthPrecent > 0)
+        {
+            playerHealthBar.localScale = new Vector3(healthPrecent, 1, 1);
+        }
+        else
+        {
+            playerHealthBar.localScale = new Vector3(0, 1, 1);
+        }
+    }
+
     // returns true if successful
     private void AttemptRunAway()
     {
         int chance = UnityEngine.Random.Range(1, 101);
         Debug.Log(chance);
-        if (chance > 50)
+        if (chance > 30)
         {
             gameManager.ExitBattle();
             infoCounter = 0;
