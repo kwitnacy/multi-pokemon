@@ -66504,6 +66504,25 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 437785484518097459}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &1645520401
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1645520400}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ae65580059c04cb469699b3e7fa1b093, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!4 &1645520405 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 437785485089350689, guid: 9fdc97d09b11b654e99a72b46e519400,
@@ -70195,7 +70214,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 58.1, y: -31}
+  m_AnchoredPosition: {x: 58.09999, y: -31}
   m_SizeDelta: {x: 72.17986, y: 25.261292}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1722992590
@@ -80753,7 +80772,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 107.69999, y: -31}
+  m_AnchoredPosition: {x: 107.69998, y: -31}
   m_SizeDelta: {x: 45.07454, y: 25.261292}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2008446216
@@ -84735,6 +84754,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 437785485089350688, guid: 9fdc97d09b11b654e99a72b46e519400,
+        type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 1645520401}
     - target: {fileID: 437785485089350689, guid: 9fdc97d09b11b654e99a72b46e519400,
         type: 3}
       propertyPath: m_LocalPosition.x
