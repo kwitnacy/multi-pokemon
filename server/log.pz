@@ -2,3 +2,11 @@
 [Jun 28 18:54:25] Login from: 127.0.0.1:1500, username: kwitnoncy: success :)
 [Jun 28 18:55:08] Login from: 127.0.0.1:1500, username: kwitnoncy: success :)
 [Jun 28 18:55:43] Login from: 127.0.0.1:1500, username: kwitnoncy: success :)
+[Jun 29 12:18:37] STARTED Server
+[Jun 29 12:19:31] STARTED Server
+[Jun 29 12:19:55] STARTED Server
+[Jun 29 12:20:06] Sign-in from: 127.0.0.1:1500, username: kwitnoncy1: accont was created (passwd_hash: dzien_dobry)
+[Jun 29 12:20:12] Login from: 127.0.0.1:1500, username: kwitnoncy1: success :)
+[Jun 29 12:20:17] Logout from: 127.0.0.1:1500, username: kwitnoncy1: succes :)
+[Jun 29 12:21:05] Sign-in from: 127.0.0.1:1500, username: kwitnoncy1: name taken, account was not created
+[Jun 29 12:21:08] Login from: 127.0.0.1:1500, username: kwitnoncy1: success :)

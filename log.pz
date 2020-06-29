@@ -34,3 +34,9 @@
 [Jun 28 21:54:03] Sign-in from: 127.0.0.1:1500, username: testeslkajdlkajslkj: name taken, account was not created
 [Jun 28 21:54:11] Login from: 127.0.0.1:1500, username: testeslkajdlkajslkj: success :)
 [Jun 28 21:54:12] Logout from: 127.0.0.1:1500, username: testeslkajdlkajslkj: succes :)
+[Jun 29 14:18:55] STARTED Server
+[Jun 29 14:21:03] Sign-in from: 127.0.0.1:1500, username: kwitnoncy12: accont was created (passwd_hash: dowidzenia)
+[Jun 29 14:21:18] Login from: 127.0.0.1:1500, username: kwitnoncy12: success :)
+[Jun 29 14:21:51] Sign-in from: 127.0.0.1:1500, username: kwitnoncy12: name taken, account was not created
+[Jun 29 14:21:57] Login from: 127.0.0.1:1500, username: kwitnoncy12: success :)
+[Jun 29 14:22:02] Logout from: 127.0.0.1:1500, username: kwitnoncy12: succes :)

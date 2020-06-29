@@ -24,7 +24,7 @@ class Server():
         self.FREE_PORTS = [i for i in range(1338, 1401, 1)]
         self.ONLINE_USERS = {}
         self.RUNNING = True
-        self.TIMEOUT = 15
+        self.TIMEOUT = 10
 
         print('SERVER ADDR: ' + self.HOST + ':' + str(self.PORT_MAIN))
 
@@ -68,7 +68,7 @@ class Server():
         self.thread_console.start()
 
 
-    def close_all_that_shit(self):
+    def close_all(self):
         # TODO:
         # TODO: close all connections
         # TODO: close sockets
@@ -124,32 +124,41 @@ class Server():
 
     def log_in(self, j, cpk, client_addr):
         # find in database
-        if self.users[j['user_name']]['passwd_hash'] == j['passwd_hash']:
-            # user row found
-            # get data to variable j/users
-            token = os.urandom(16).hex()
-            self.log('Login from: ' + str(client_addr[0]) + ':' + str(client_addr[1]) + ', username: ' + j['user_name'] + ': success :)')
-            self.ONLINE_USERS[token] = self.users[j['user_name']]
-            self.ONLINE_USERS[token]['ip_addr'] = (client_addr[0], client_addr[1])
-            self.ONLINE_USERS[token]['rsa_engine'] = cpk
-            self.ONLINE_USERS[token]['token'] = token
-            
+        try:
+            if self.users[j['user_name']]['passwd_hash'] == j['passwd_hash']:
+                # user row found
+                # get data to variable j/users
+                token = os.urandom(16).hex()
+                self.log('Login from: ' + str(client_addr[0]) + ':' + str(client_addr[1]) + ', username: ' + j['user_name'] + ': success :)')
+                self.ONLINE_USERS[token] = self.users[j['user_name']]
+                self.ONLINE_USERS[token]['ip_addr'] = (client_addr[0], client_addr[1])
+                self.ONLINE_USERS[token]['rsa_engine'] = cpk
+                self.ONLINE_USERS[token]['token'] = token
+                
+                return {
+                    "status": "OK",
+                    "mess": "logged in",
+                    "token": token
+                }
+            else:
+                self.log('Login from: ' + str(client_addr[0]) + ':' + str(client_addr[1]) + ', username: ' + j['user_name'] + ': error :( ')
+        except KeyError:
             return {
-                "status": "OK",
-                "mess": "logged in",
-                "token": token
+                "status": "Erorr",
+                "mess": "No user"
             }
-        else:
-            self.log('Login from: ' + str(client_addr[0]) + ':' + str(client_addr[1]) + ', username: ' + j['user_name'] + ': error :( ')
-
         
-
-
-    # TODO
     def log_out(self, j, cpk, client_addr):
         # delete to self.ONLINE_USERS = {}
         # save data to database
-        token = j['token']
+        try:
+            token = j['token']
+        except KeyError:
+            return {
+                "status": "Error",
+                "mess": "No token"
+            }
+            
         if token in self.ONLINE_USERS:
             self.log('Logout from: ' + str(client_addr[0]) + ':' + str(client_addr[1]) + ', username: ' + self.ONLINE_USERS[token]['user_name'] + ': succes :)')
             del self.ONLINE_USERS[token]
@@ -166,30 +175,34 @@ class Server():
             }
 
 
-
     def sign_in(self, j, cpk, client_addr):
-        if j['user_name'] in self.users:
-            self.log('Sign-in from: ' + str(client_addr[0]) + ':' + str(client_addr[1]) + ', username: ' + j['user_name']
-                + ': name taken, account was not created')
+        try:
+            if j['user_name'] in self.users:
+                self.log('Sign-in from: ' + str(client_addr[0]) + ':' + str(client_addr[1]) + ', username: ' + j['user_name']
+                    + ': name taken, account was not created')
 
-            return {
+                return {
+                    "status": "Error",
+                    "mess": "name taken"
+                }
+            else:
+                self.users[j['user_name']] = j
+                self.users[j['user_name']]['ip_addr'] = None
+                self.users[j['user_name']]['loc'] = None
+                self.users[j['user_name']]['user_ID'] = 0
+                
+                self.log('Sign-in from: ' + str(client_addr[0]) + ':' + str(client_addr[1]) + ', username: ' + j['user_name']
+                        + ': accont was created (passwd_hash: ' + j['passwd_hash'] + ')')
+                        
+                return {
+                    "status": "OK",
+                    "mess": "singed in"
+                }
+        except:
+            return{
                 "status": "Error",
-                "mess": "name taken"
+                "mess": "Wrong json"
             }
-        else:
-            self.users[j['user_name']] = j
-            self.users[j['user_name']]['ip_addr'] = None
-            self.users[j['user_name']]['loc'] = None
-            self.users[j['user_name']]['user_ID'] = 0
-            
-            self.log('Sign-in from: ' + str(client_addr[0]) + ':' + str(client_addr[1]) + ', username: ' + j['user_name']
-                    + ': accont was created (passwd_hash: ' + j['passwd_hash'] + ')')
-                    
-            return {
-                "status": "OK",
-                "mess": "singed in"
-            }
-
 
 
     # TODO
@@ -197,9 +210,21 @@ class Server():
         # get data with who you want to fight
         # check if player is online
         # send to the attacker ip of the attacked player with fight token and seed
-        pass
+        return{
+            "status": "Error",
+            "mess": "Not implemented yet"
+        }
 
-    
+
+    # TODO
+    def fight_result(self):
+        # get fight result
+        return{
+            "status": "Error",
+            "mess": "Not implemented yet"
+        }
+
+
     def session(self, data, addr, free_port):
         session_socket = s.socket(s.AF_INET, s.SOCK_DGRAM)
         session_socket.bind((self.HOST, free_port))
@@ -273,7 +298,7 @@ class Server():
             elif command == 'users':
                 print(self.users)
             elif command == 'quit' or command == 'close':
-                self.close_all_that_shit()
+                self.close_all()
                 self.RUNNING = False
                 break
             elif command == 'help':
